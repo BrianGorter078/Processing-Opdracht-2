@@ -19,6 +19,7 @@ int topLeft = 50;
 
 void setup()
 {
+  background(255,255,255);
   // laad alle data in
   loadStudentData();
   size(1000, 1000);
@@ -189,12 +190,8 @@ void drawName(String name, int x, int y)
 {
   pushMatrix();
   translate(x, y);
-  fill(0, 0, 0);
-  line(50, height / scale, topLeft, 20);
-  line(50, height / scale, width / scale, height/scale);  
-  line(width / scale, height/ scale, height / scale, 20);
-  line(50, 20, height / scale, 20);
-  textSize(20);
+  textSize(15);
+  fill(255,0,0);
   text(name, 75, 80);
   textSize(10);
   popMatrix();
