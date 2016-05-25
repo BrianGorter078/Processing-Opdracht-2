@@ -19,7 +19,7 @@ int topLeft = 50;
 
 void setup()
 {
-  background(255,255,255);
+  background(255, 255, 255);
   // laad alle data in
   loadStudentData();
   size(1000, 1000);
@@ -72,13 +72,12 @@ void drawEverything()
           //Omdat i bij 0 begint en het eerste item niet nodig is moeten we i en j 1 omhoog doen, de namen van de x en y as worden opgehaald
           String nameX = names[i+1];
           String nameY = names[j+1];   
-          
+
           //Zoekt de maximale waardes
           getMax();
-          
+
           //tekend de map met de volgende parameters
           drawMap(i * width / 6, j * height / 6, nameX, nameY);
-          
         } else
         {
           //wanneer i gelijk is aan j dan word er een methode aangeroepen die de namen in een rechthoek neerzet
@@ -103,7 +102,7 @@ void getMax()
   float[] DEV = new float[500];
   float[] PRJ = new float[500];
   float[] SKL = new float[500];
-  
+
   //loopt over de studentenData en van elke vak elke waarde en stopt deze in de tijdelijke arrays
   for (int i = 0; i < studentData.size(); i++) {
     LFTD[i] = studentData.get(i).lftd;
@@ -135,14 +134,14 @@ void drawMap(int x, int y, String nameX, String nameY)
     //de doorgegeven nameX en nameY worden doorgegevn met de loop variabele waarna er een float uitkomt met de waarde van dat vak met een x en y waarde.
     float dataX = data(nameX, i); 
     float dataY = data(nameY, i);
-    
+
     //naast een float is er ook een integer nodig die de maximale waarde van de doorgegeven name op slaat
     int xValue = name(nameX);
     int yValue = name(nameY); 
 
     //map de zet de dataX en dataY om naar een waarde tussen 0 en xValue en yValue
-    float xvalue = map(dataX, 0, xValue , topLeft, width / scale);
-    float yvalue = map(dataY, 0, yValue , width / scale, 20);
+    float xvalue = map(dataX, 0, xValue, topLeft, width / scale);
+    float yvalue = map(dataY, 0, yValue, width / scale, 20);
 
     //dit gedeelte zorgt ervoor de de grafieken naast elkaar en onder elkaar worden neergezet
     pushMatrix();
@@ -174,16 +173,13 @@ void drawOutlines(int valueX, int valueY, String nameX, String nameY)
   text(valueY, topLeft - marginTop, 22 );
   text(nameY, 10, height / 12);
   text(nameX, width / 12, height / scale + marginTop);
-  
-  
 }
 
 void drawTitle()
 {
   textSize(20);
-  fill(0,0,0);
-  text("Matrix plot van Leeftijd, Analyse, Development, Project, Skills", width / 7,  height - 100);
-  
+  fill(0, 0, 0);
+  text("Matrix plot van Leeftijd, Analyse, Development, Project, Skills", width / 7, height - 100);
 }
 //tekent de rechthoeken in de diagonale as
 void drawName(String name, int x, int y)
@@ -191,7 +187,7 @@ void drawName(String name, int x, int y)
   pushMatrix();
   translate(x, y);
   textSize(15);
-  fill(255,0,0);
+  fill(255, 0, 0);
   text(name, 75, 80);
   textSize(10);
   popMatrix();
@@ -221,7 +217,7 @@ int name(String name)
   {
     value = maxSKL;
   }
-  if(value < 10)
+  if (value < 10)
   {
     value = value + 1;
   }

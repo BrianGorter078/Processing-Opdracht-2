@@ -46,6 +46,8 @@ class PlotData
 
 void setup()
 {
+  
+  background(255,255,255);
   size(600, 600);
   //laad alle data uit het txt bestand
   loadPlotData();
@@ -66,7 +68,7 @@ void loadGraph()
   //tekent de waardes bij de grafiek
   fill(0, 0, 0);
   text(0, 50 -10, 550 + 30);
-  text(maxX, 550, 550 + 30);  
+  text(maxX, width - 20, 550 + 30);  
   text(maxY, 10, 25);
 
   //tekent de namen van de x en y as bij de grafiek
