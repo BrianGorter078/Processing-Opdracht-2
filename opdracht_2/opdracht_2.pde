@@ -1,16 +1,9 @@
-
 // Data Opdracht 2B
 PlotData pdata;
 ArrayList <PlotData> plotData =  new ArrayList<PlotData>();
 float[] eig1Max = new float[500];
 float[] eig2Max = new float[500];
-int Stroke = 5;
-int leftmargin = 50;
-int yTopMargin = 20;
-int xRightMargin = width - 20;
-int margin = 550;
-int marginTop = 25;
-int marginLeft = yTopMargin - 10;
+int xRight550 = width - 20;
 String x = "";
 String y = "";
 float maxXfloat;
@@ -50,19 +43,17 @@ void setup()
   loadPlotData();
   
   fill(255,255,255);
-  line(leftmargin, margin, leftmargin, 20);
-  line(leftmargin, margin, 580, margin);  
+  line(50, 550, 50, 20);
+  line(50, 550, 580, 550);  
   fill(0,0,0);
-  text(0,leftmargin -10 ,margin + 30);
-  text(maxX, margin, margin + 30);  
-  text(maxY, marginLeft, marginTop);
+  text(0,50 -10 ,550 + 30);
+  text(maxX, 550, 550 + 30);  
+  text(maxY, 10, 25);
   noLoop();
-  
-  
-
   fill(0,0,0);
-  text(y,marginLeft,height /2);
-  text(x,width/2, margin + 30);
+  text(y,10,height /2);
+  text(x,width/2, 550 + 30);
+  
 }
 
 
@@ -82,7 +73,6 @@ void loadPlotData()
     pdata = new PlotData(a[0],a[1],a[2]);
     plotData.add(pdata);
     
-    //println(plotData.get(i - 1).category);
     }
     
     else
