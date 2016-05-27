@@ -10,6 +10,11 @@ int maxPRJ;
 int maxSKL;
 int maxLFTD;
 
+int minANA;
+int minDEV;
+int minPRJ;
+int minSKL;
+int minLFTD;
 //Deze waarde schaalt de grafieken
 int scale = 7;
 
@@ -97,11 +102,11 @@ void drawEverything()
 void getMax()
 { 
   //tijdelijke float arrays waarin de data word opgeslagen
-  float[] LFTD = new float[500];
-  float[] ANA = new float[500];
-  float[] DEV = new float[500];
-  float[] PRJ = new float[500];
-  float[] SKL = new float[500];
+  float[] LFTD = new float[studentData.size()];
+  float[] ANA = new float[studentData.size()];
+  float[] DEV = new float[studentData.size()];
+  float[] PRJ = new float[studentData.size()];
+  float[] SKL = new float[studentData.size()];
 
   //loopt over de studentenData en van elke vak elke waarde en stopt deze in de tijdelijke arrays
   for (int i = 0; i < studentData.size(); i++) {
@@ -110,6 +115,8 @@ void getMax()
     DEV[i] = studentData.get(i).DEV;
     PRJ[i] = studentData.get(i).PRJ;
     SKL[i] = studentData.get(i).SKL;
+    
+    println(LFTD[i]);
   }
   //De max van elke array word gezocht en omgezet naar een int.
   maxLFTD = floatToInt(max(LFTD));
@@ -117,6 +124,14 @@ void getMax()
   maxDEV = floatToInt(max(DEV));
   maxPRJ = floatToInt(max(PRJ));
   maxSKL = floatToInt(max(SKL));
+  
+  minLFTD = floatToInt(min(LFTD));
+  minANA = floatToInt(min(ANA));
+  minDEV = floatToInt(min(DEV));
+  minPRJ = floatToInt(min(PRJ));
+  minSKL = floatToInt(min(SKL));
+  
+  println(minLFTD + " " + minANA + " " + minDEV + " " + minPRJ + " " + minSKL + " "  );
 }
 
 //zet floats om in integers
@@ -136,20 +151,25 @@ void drawMap(int x, int y, String nameX, String nameY)
     float dataY = data(nameY, i);
 
     //naast een float is er ook een integer nodig die de maximale waarde van de doorgegeven name op slaat
-    int xValue = name(nameX);
-    int yValue = name(nameY); 
+    int xMaxValue = name(nameX, "max");
+    int yMaxValue = name(nameY, "max"); 
+    
+    int xMinValue = name(nameX, "min");
+    int yMinValue = name(nameY, "min");
 
+    //println(xMinValue + " " + xMaxValue + " " + yMinValue + " " + yMaxValue);
     //map de zet de dataX en dataY om naar een waarde tussen 0 en xValue en yValue
-    float xvalue = map(dataX, 0, xValue, topLeft, width / scale);
-    float yvalue = map(dataY, 0, yValue, width / scale, 20);
+    float xvalue = map(dataX, xMinValue, xMaxValue, topLeft, width / scale);
+    float yvalue = map(dataY, yMinValue, yMaxValue, width / scale, 20);
 
+    
     //dit gedeelte zorgt ervoor de de grafieken naast elkaar en onder elkaar worden neergezet
     pushMatrix();
     translate(x, y);
     fill(0, 0, 0);
     ellipse(xvalue, yvalue, 1, 1);
     //de xValue en yValue worden meegegeven evenals de nameX en nameY zodat deze waardes bij de grafieken kunnen worden gezet
-    drawOutlines(xValue, yValue, nameX, nameY);
+    drawOutlines(xMaxValue, yMaxValue, xMinValue, yMinValue, nameX, nameY);
     popMatrix();
   }
 }
@@ -162,15 +182,16 @@ void drawEllipse(int red, int green, int blue, float x, float y, int size)
 }
 
 //tekent alles behalve de grafiek, de waardes etc
-void drawOutlines(int valueX, int valueY, String nameX, String nameY)
+void drawOutlines(int valueMaxX, int valueMaxY, int valueMinX, int valueMinY, String nameX, String nameY)
 {
   fill(255, 255, 255);
   line(50, height/ scale, topLeft, 20);
   line(50, height / scale, width / scale, height/scale);  
   fill(0, 0, 0);
-  text(0, 50 -10, height / scale + marginTop);
-  text(valueX, height / scale, height / scale + marginTop);  
-  text(valueY, topLeft - marginTop, 22 );
+  text(valueMinY, 35, height / scale);
+  text(valueMinX, 50, height / scale + marginTop);
+  text(valueMaxX, height / scale, height / scale + marginTop);  
+  text(valueMaxY, topLeft - marginTop, 22 );
   text(nameY, 10, height / 12);
   text(nameX, width / 12, height / scale + marginTop);
 }
@@ -194,32 +215,75 @@ void drawName(String name, int x, int y)
 }
 
 //zorgt ervoor dat er met de naam een waarde kan worden toegewezen
-int name(String name)
+int name(String name, String a)
 {
   int value = 0;
   if (name.equals("lftd"))
   {
-    value = maxLFTD;
+    if(a.equals("max"))
+    {
+      value = maxLFTD;
+    }
+    else
+    {
+      value = minLFTD - 1;
+    }
   }
   if (name.equals("ANA"))
   {
-    value = maxANA;
+    if(a.equals("max"))
+    {
+      
+      value = maxANA;
+    }
+    else{
+      value = minANA;
+    }
   }
   if (name.equals("DEV"))
   {
-    value = maxDEV;
+    if(a.equals("max"))
+    {
+      
+      value = maxDEV;
+    }
+    else{
+      value = minDEV;
+    }
   }
   if (name.equals("PRJ"))
   {
-    value = maxPRJ;
+    if(a.equals("max"))
+    {
+      
+      value = maxPRJ;
+    }
+    else{
+      value = minPRJ;
+    }
+    
   }
   if (name.equals("SKL"))
   {
-    value = maxSKL;
+    if(a.equals("max"))
+    {
+      
+      value = maxSKL;
+    }
+    else{
+      value = minSKL;
+    }
   }
   if (value < 10)
   {
+    if(a.equals("max")){
     value = value + 1;
+    }
+    else{
+      if(value != 0){
+      value = value - 1;
+      }
+    }
   }
   return value ;
 }
